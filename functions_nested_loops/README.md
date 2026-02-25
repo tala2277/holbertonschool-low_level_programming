@@ -1,3 +1,1 @@
-# functions_nested_loops
-
-C programs using functions and nested loops.
+Functions and nested loops project.
