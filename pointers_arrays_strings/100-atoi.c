@@ -11,16 +11,19 @@ int _atoi(char *s)
 	int i = 0;
 	int sign = 1;
 	int started = 0;
-	int result = 0;
+	int res = 0;
 
 	while (s[i] != '\0')
 	{
 		if (s[i] == '-' && started == 0)
 			sign = -sign;
+		else if (s[i] == '+' && started == 0)
+			;
 		else if (s[i] >= '0' && s[i] <= '9')
 		{
 			started = 1;
-			result = result * 10 + (s[i] - '0');
+			/* build as negative to avoid overflow (handles INT_MIN) */
+			res = res * 10 - (s[i] - '0');
 		}
 		else if (started == 1)
 			break;
@@ -28,5 +31,7 @@ int _atoi(char *s)
 		i++;
 	}
 
-	return (result * sign);
+	if (sign > 0)
+		return (-res);
+	return (res);
 }
