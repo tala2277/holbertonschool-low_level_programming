@@ -4,21 +4,14 @@
 
 int main(void)
 {
-    int sum = 0;
-    int rand_char;
+	int i;
+	int len = 16;
 
-    srand(time(NULL));
+	srand((unsigned int)time(NULL));
 
-    while (sum < 2772)
-    {
-        rand_char = rand() % 94 + 33; /* printable ASCII */
+	for (i = 0; i < len; i++)
+		putchar((rand() % 94) + 33);
 
-        if (sum + rand_char > 2772)
-            continue;
-
-        sum += rand_char;
-        printf("%c", rand_char);
-    }
-
-    return (0);
+	putchar('\n');
+	return (0);
 }
