@@ -6,18 +6,16 @@
  * Return: Always 0.
  */
 int main(void)
-{   int n; 
-	int a[5];
-	int *p;
+{
+        int n;
+        int a[5];
+        int *p;
 
-	p = a;
+        a[2] = 1024;
+        p = &n;
 
-	n = 98;
-	a[0] = 0;
-	a[1] = 1;
-	*(p + 5) = 98;
-	a[3] = 3;
-	a[4] = 4;
+        *(p - 3) = 98;
 
-	printf("a[2] = %d\n", a[2]);
-	return (0); } 
+        printf("a[2] = %d\n", a[2]);
+        return (0);
+}
