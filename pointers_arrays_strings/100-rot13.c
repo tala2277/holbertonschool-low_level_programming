@@ -9,17 +9,19 @@
 char *rot13(char *str)
 {
 	int i, j;
-	char input[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-	char output[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
+	char a[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char b[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
-		for (j = 0; input[j] != '\0'; j++)
+		for (j = 0; j < 52; j++)
 		{
-			if (str[i] == input[j])
-				str[i] = output[j];
+			if (str[i] == a[j])
+			{
+				str[i] = b[j];
+				break;
+			}
 		}
 	}
-
 	return (str);
 }
