@@ -6,8 +6,7 @@
  * Return: Always 0.
  */
 int main(void)
-{
-	int n;
+{   int n; 
 	int a[5];
 	int *p;
 
@@ -21,5 +20,4 @@ int main(void)
 	a[4] = 4;
 
 	printf("a[2] = %d\n", a[2]);
-	return (0);
-}
+	return (0); } 
