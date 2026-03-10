@@ -12,6 +12,7 @@ int str_len(char *s);
 int is_palindrome(char *s)
 {
 	int len = str_len(s);
+
 	return (check_pal(s, 0, len - 1));
 }
 
@@ -24,6 +25,7 @@ int str_len(char *s)
 {
 	if (*s == '\0')
 		return (0);
+
 	return (1 + str_len(s + 1));
 }
 
@@ -40,5 +42,6 @@ int check_pal(char *s, int start, int end)
 		return (1);
 	if (s[start] != s[end])
 		return (0);
+
 	return (check_pal(s, start + 1, end - 1));
 }
