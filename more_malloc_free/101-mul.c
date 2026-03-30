@@ -3,9 +3,6 @@
 
 int _putchar(char c);
 
-/**
- * error_exit - prints Error and exits
- */
 void error_exit(void)
 {
 	_putchar('E');
@@ -20,7 +17,6 @@ void error_exit(void)
 int _strlen(char *s)
 {
 	int i = 0;
-
 	while (s[i])
 		i++;
 	return (i);
@@ -29,7 +25,6 @@ int _strlen(char *s)
 int is_digit(char *s)
 {
 	int i = 0;
-
 	while (s[i])
 	{
 		if (s[i] < '0' || s[i] > '9')
@@ -102,6 +97,5 @@ int main(int argc, char *argv[])
 
 	print_number(res, len);
 	free(res);
-
 	return (0);
 }
