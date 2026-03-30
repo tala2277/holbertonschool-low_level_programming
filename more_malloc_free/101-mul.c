@@ -6,11 +6,8 @@ int _putchar(char c);
 /**
  * print_error - prints Error and exits
  */
-void print_error(int *result)
+void print_error(void)
 {
-	if (result != NULL)
-		free(result);
-
 	_putchar('E');
 	_putchar('r');
 	_putchar('r');
@@ -68,16 +65,16 @@ int main(int argc, char *argv[])
 {
 	char *num1, *num2;
 	int len1, len2, len, i, j, mul, carry;
-	int *result = NULL;
+	int *result;
 
 	if (argc != 3)
-		print_error(NULL);
+		print_error();
 
 	num1 = argv[1];
 	num2 = argv[2];
 
 	if (!is_digit(num1) || !is_digit(num2))
-		print_error(NULL);
+		print_error();
 
 	len1 = _strlen(num1);
 	len2 = _strlen(num2);
@@ -85,7 +82,7 @@ int main(int argc, char *argv[])
 
 	result = malloc(sizeof(int) * len);
 	if (result == NULL)
-		exit(98);
+		print_error(); /* هنا مهم */
 
 	for (i = 0; i < len; i++)
 		result[i] = 0;
