@@ -1,17 +1,8 @@
 #include "main.h"
 #include <stdlib.h>
 
-/**
- * _putchar - writes a character
- * @c: character to print
- *
- * Return: 1 on success
- */
 int _putchar(char c);
 
-/**
- * error_exit - prints Error and exits
- */
 void error_exit(void)
 {
 	_putchar('E');
@@ -23,12 +14,6 @@ void error_exit(void)
 	exit(98);
 }
 
-/**
- * _strlen - returns length of string
- * @s: string
- *
- * Return: length
- */
 int _strlen(char *s)
 {
 	int i = 0;
@@ -38,12 +23,6 @@ int _strlen(char *s)
 	return (i);
 }
 
-/**
- * is_digit - checks if string contains only digits
- * @s: string
- *
- * Return: 1 if digits, 0 otherwise
- */
 int is_digit(char *s)
 {
 	int i = 0;
@@ -57,11 +36,6 @@ int is_digit(char *s)
 	return (1);
 }
 
-/**
- * print_number - prints result
- * @res: result array
- * @len: length of array
- */
 void print_number(int *res, int len)
 {
 	int i = 0;
@@ -84,13 +58,6 @@ void print_number(int *res, int len)
 	_putchar('\n');
 }
 
-/**
- * main - multiplies two numbers
- * @argc: argument count
- * @argv: arguments
- *
- * Return: 0 on success
- */
 int main(int argc, char *argv[])
 {
 	char *n1, *n2;
@@ -112,7 +79,10 @@ int main(int argc, char *argv[])
 
 	res = malloc(sizeof(int) * len);
 	if (res == NULL)
+	{
+		free(res);
 		error_exit();
+	}
 
 	for (i = 0; i < len; i++)
 		res[i] = 0;
