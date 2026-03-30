@@ -1,19 +1,16 @@
 #include "main.h"
 #include <stdlib.h>
 
-/**
- * _putchar - writes the character c to stdout
- * @c: character to print
- *
- * Return: On success 1.
- */
 int _putchar(char c);
 
 /**
  * print_error - prints Error and exits
  */
-void print_error(void)
+void print_error(int *result)
 {
+	if (result != NULL)
+		free(result);
+
 	_putchar('E');
 	_putchar('r');
 	_putchar('r');
@@ -23,12 +20,6 @@ void print_error(void)
 	exit(98);
 }
 
-/**
- * _strlen - returns length of string
- * @s: string
- *
- * Return: length
- */
 int _strlen(char *s)
 {
 	int i = 0;
@@ -38,12 +29,6 @@ int _strlen(char *s)
 	return (i);
 }
 
-/**
- * is_digit - checks if string contains only digits
- * @s: string
- *
- * Return: 1 if all digits, 0 otherwise
- */
 int is_digit(char *s)
 {
 	int i = 0;
@@ -57,11 +42,6 @@ int is_digit(char *s)
 	return (1);
 }
 
-/**
- * print_result - prints number stored in array
- * @result: result array
- * @size: size of array
- */
 void print_result(int *result, int size)
 {
 	int i = 0;
@@ -84,27 +64,20 @@ void print_result(int *result, int size)
 	_putchar('\n');
 }
 
-/**
- * main - multiplies two positive numbers
- * @argc: argument count
- * @argv: argument vector
- *
- * Return: 0 on success
- */
 int main(int argc, char *argv[])
 {
 	char *num1, *num2;
 	int len1, len2, len, i, j, mul, carry;
-	int *result;
+	int *result = NULL;
 
 	if (argc != 3)
-		print_error();
+		print_error(NULL);
 
 	num1 = argv[1];
 	num2 = argv[2];
 
 	if (!is_digit(num1) || !is_digit(num2))
-		print_error();
+		print_error(NULL);
 
 	len1 = _strlen(num1);
 	len2 = _strlen(num2);
