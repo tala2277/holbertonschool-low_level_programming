@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /**
- * error_exit - prints Error and exits
+ * error_exit - prints Error and exits with status 98
  */
 void error_exit(void)
 {
@@ -16,10 +16,10 @@ void error_exit(void)
 }
 
 /**
- * _strlen - returns length of string
+ * _strlen - returns the length of a string
  * @s: string
  *
- * Return: length
+ * Return: length of string
  */
 int _strlen(char *s)
 {
@@ -31,10 +31,10 @@ int _strlen(char *s)
 }
 
 /**
- * is_digit - checks if string contains only digits
+ * is_digit - checks if a string contains only digits
  * @s: string
  *
- * Return: 1 if digits, 0 otherwise
+ * Return: 1 if only digits, 0 otherwise
  */
 int is_digit(char *s)
 {
@@ -50,9 +50,9 @@ int is_digit(char *s)
 }
 
 /**
- * print_number - prints result
+ * print_number - prints the result
  * @res: result array
- * @len: length
+ * @len: length of array
  */
 void print_number(int *res, int len)
 {
@@ -77,11 +77,11 @@ void print_number(int *res, int len)
 }
 
 /**
- * main - multiplies two numbers
- * @argc: argument count
- * @argv: arguments
+ * main - multiplies two positive numbers
+ * @argc: number of arguments
+ * @argv: array of arguments
  *
- * Return: 0
+ * Return: Always 0
  */
 int main(int argc, char *argv[])
 {
