@@ -2,10 +2,12 @@
 #include <stdlib.h>
 
 /**
- * error_exit - prints Error and exits
+ * print_error - prints Error and exits
  */
-void error_exit(void)
+void print_error(int *result)
 {
+	if (result != NULL)
+		free(result);
 	_putchar('E');
 	_putchar('r');
 	_putchar('r');
@@ -26,23 +28,23 @@ int _strlen(char *s)
 	int i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (s[i])
 		i++;
 	return (i);
 }
 
 /**
- * is_digit - checks digits
+ * is_digit - checks if string contains only digits
  * @s: string
  *
- * Return: 1 or 0
+ * Return: 1 if all digits, 0 otherwise
  */
 int is_digit(char *s)
 {
 	int i;
 
 	i = 0;
-	while (s[i] != '\0')
+	while (s[i])
 	{
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
@@ -52,97 +54,88 @@ int is_digit(char *s)
 }
 
 /**
- * print_number - prints number
- * @res: result
- * @len: length
+ * print_result - prints number stored in array
+ * @result: result array
+ * @size: size of array
  */
-void print_number(int *res, int len)
+void print_result(int *result, int size)
 {
 	int i;
 
 	i = 0;
-	while (i < len && res[i] == 0)
+	while (i < size && result[i] == 0)
 		i++;
 
-	if (i == len)
+	if (i == size)
 	{
 		_putchar('0');
 		_putchar('\n');
 		return;
 	}
 
-	while (i < len)
+	while (i < size)
 	{
-		_putchar(res[i] + '0');
+		_putchar(result[i] + '0');
 		i++;
 	}
 	_putchar('\n');
 }
 
 /**
- * main - multiply
- * @argc: count
- * @argv: args
+ * main - multiplies two positive numbers
+ * @argc: argument count
+ * @argv: argument vector
  *
- * Return: 0
+ * Return: 0 on success
  */
 int main(int argc, char *argv[])
 {
-	char *n1;
-	char *n2;
+	char *num1;
+	char *num2;
 	int len1;
 	int len2;
 	int len;
 	int i;
 	int j;
-	int carry;
 	int mul;
-	int *res;
+	int carry;
+	int *result;
 
 	if (argc != 3)
-		error_exit();
+		print_error(NULL);
 
-	n1 = argv[1];
-	n2 = argv[2];
+	num1 = argv[1];
+	num2 = argv[2];
 
-	if (is_digit(n1) == 0 || is_digit(n2) == 0)
-		error_exit();
+	if (!is_digit(num1) || !is_digit(num2))
+		print_error(NULL);
 
-	len1 = _strlen(n1);
-	len2 = _strlen(n2);
+	len1 = _strlen(num1);
+	len2 = _strlen(num2);
 	len = len1 + len2;
 
-	res = malloc(sizeof(int) * len);
-	if (res == NULL)
-		error_exit();
+	result = malloc(sizeof(int) * len);
+	if (result == NULL)
+		print_error(NULL);
 
-	i = 0;
-	while (i < len)
-	{
-		res[i] = 0;
-		i++;
-	}
+	for (i = 0; i < len; i++)
+		result[i] = 0;
 
-	i = len1 - 1;
-	while (i >= 0)
+	for (i = len1 - 1; i >= 0; i--)
 	{
 		carry = 0;
-		j = len2 - 1;
-
-		while (j >= 0)
+		for (j = len2 - 1; j >= 0; j--)
 		{
-			mul = (n1[i] - '0') * (n2[j] - '0');
-			mul = mul + res[i + j + 1] + carry;
-			res[i + j + 1] = mul % 10;
+			mul = (num1[i] - '0') * (num2[j] - '0');
+			mul += result[i + j + 1] + carry;
+			result[i + j + 1] = mul % 10;
 			carry = mul / 10;
-			j--;
 		}
-		res[i] = res[i] + carry;
-		i--;
+		result[i] += carry;
 	}
 
-	print_number(res, len);
-	free(res);
+	print_result(result, len);
+	free(result);
 
 	return (0);
 }
