@@ -2,9 +2,10 @@
 #include <stdlib.h>
 
 /**
- * print_error - prints Error and exits
+ * error_exit - prints Error and exits
+ * @result: pointer to free
  */
-void print_error(int *result)
+void error_exit(int *result)
 {
 	if (result != NULL)
 		free(result);
@@ -34,10 +35,10 @@ int _strlen(char *s)
 }
 
 /**
- * is_digit - checks if string contains only digits
+ * is_digit - checks if string contains digits only
  * @s: string
  *
- * Return: 1 if all digits, 0 otherwise
+ * Return: 1 or 0
  */
 int is_digit(char *s)
 {
@@ -54,9 +55,9 @@ int is_digit(char *s)
 }
 
 /**
- * print_result - prints number stored in array
- * @result: result array
- * @size: size of array
+ * print_result - prints result
+ * @result: array
+ * @size: size
  */
 void print_result(int *result, int size)
 {
@@ -82,11 +83,11 @@ void print_result(int *result, int size)
 }
 
 /**
- * main - multiplies two positive numbers
- * @argc: argument count
- * @argv: argument vector
+ * main - multiplies two numbers
+ * @argc: count
+ * @argv: args
  *
- * Return: 0 on success
+ * Return: 0
  */
 int main(int argc, char *argv[])
 {
@@ -102,13 +103,13 @@ int main(int argc, char *argv[])
 	int *result;
 
 	if (argc != 3)
-		print_error(NULL);
+		error_exit(NULL);
 
 	num1 = argv[1];
 	num2 = argv[2];
 
 	if (!is_digit(num1) || !is_digit(num2))
-		print_error(NULL);
+		error_exit(NULL);
 
 	len1 = _strlen(num1);
 	len2 = _strlen(num2);
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
 
 	result = malloc(sizeof(int) * len);
 	if (result == NULL)
-		print_error(NULL);
+		error_exit(NULL);
 
 	for (i = 0; i < len; i++)
 		result[i] = 0;
