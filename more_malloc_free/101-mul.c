@@ -2,14 +2,18 @@
 #include <stdlib.h>
 
 /**
- * error_exit - prints Error and exits
- * @result: pointer to free
+ * _putchar - writes a character
+ * @c: character to print
+ *
+ * Return: 1 on success
  */
-void error_exit(int *result)
-{
-	if (result)
-		free(result);
+int _putchar(char c);
 
+/**
+ * error_exit - prints Error and exits
+ */
+void error_exit(void)
+{
 	_putchar('E');
 	_putchar('r');
 	_putchar('r');
@@ -35,10 +39,10 @@ int _strlen(char *s)
 }
 
 /**
- * is_digit - checks if string contains digits only
+ * is_digit - checks if string contains only digits
  * @s: string
  *
- * Return: 1 or 0
+ * Return: 1 if digits, 0 otherwise
  */
 int is_digit(char *s)
 {
@@ -54,27 +58,27 @@ int is_digit(char *s)
 }
 
 /**
- * print_result - prints result
- * @result: array
- * @size: size
+ * print_number - prints result
+ * @res: result array
+ * @len: length of array
  */
-void print_result(int *result, int size)
+void print_number(int *res, int len)
 {
 	int i = 0;
 
-	while (i < size && result[i] == 0)
+	while (i < len && res[i] == 0)
 		i++;
 
-	if (i == size)
+	if (i == len)
 	{
 		_putchar('0');
 		_putchar('\n');
 		return;
 	}
 
-	while (i < size)
+	while (i < len)
 	{
-		_putchar(result[i] + '0');
+		_putchar(res[i] + '0');
 		i++;
 	}
 	_putchar('\n');
@@ -82,68 +86,52 @@ void print_result(int *result, int size)
 
 /**
  * main - multiplies two numbers
- * @argc: count
- * @argv: args
+ * @argc: argument count
+ * @argv: arguments
  *
- * Return: 0
+ * Return: 0 on success
  */
 int main(int argc, char *argv[])
 {
-	char *num1;
-	char *num2;
-	int len1;
-	int len2;
-	int len;
-	int i;
-	int j;
-	int mul;
-	int carry;
-	int *result;
+	char *n1, *n2;
+	int len1, len2, len, i, j, carry, mul;
+	int *res;
 
 	if (argc != 3)
-		error_exit(NULL);
+		error_exit();
 
-	num1 = argv[1];
-	num2 = argv[2];
+	n1 = argv[1];
+	n2 = argv[2];
 
-	if (!is_digit(num1) || !is_digit(num2))
-		error_exit(NULL);
+	if (!is_digit(n1) || !is_digit(n2))
+		error_exit();
 
-	len1 = _strlen(num1);
-	len2 = _strlen(num2);
+	len1 = _strlen(n1);
+	len2 = _strlen(n2);
 	len = len1 + len2;
 
-	result = malloc(sizeof(int) * len);
-	if (result == NULL)
-		error_exit(NULL);
+	res = malloc(sizeof(int) * len);
+	if (res == NULL)
+		error_exit();
 
-	i = 0;
-	while (i < len)
-	{
-		result[i] = 0;
-		i++;
-	}
+	for (i = 0; i < len; i++)
+		res[i] = 0;
 
-	i = len1 - 1;
-	while (i >= 0)
+	for (i = len1 - 1; i >= 0; i--)
 	{
 		carry = 0;
-		j = len2 - 1;
-
-		while (j >= 0)
+		for (j = len2 - 1; j >= 0; j--)
 		{
-			mul = (num1[i] - '0') * (num2[j] - '0');
-			mul += result[i + j + 1] + carry;
-			result[i + j + 1] = mul % 10;
+			mul = (n1[i] - '0') * (n2[j] - '0');
+			mul += res[i + j + 1] + carry;
+			res[i + j + 1] = mul % 10;
 			carry = mul / 10;
-			j--;
 		}
-		result[i] += carry;
-		i--;
+		res[i] += carry;
 	}
 
-	print_result(result, len);
-	free(result);
+	print_number(res, len);
+	free(res);
 
 	return (0);
 }
