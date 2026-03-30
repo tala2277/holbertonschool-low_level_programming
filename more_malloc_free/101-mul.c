@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /**
- * error_exit - prints Error and exits with status 98
+ * error_exit - prints Error and exits
  */
 void error_exit(void)
 {
@@ -26,23 +26,23 @@ int _strlen(char *s)
 	int i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
 
 /**
- * is_digit - checks if string contains only digits
+ * is_digit - checks digits
  * @s: string
  *
- * Return: 1 if digits, 0 otherwise
+ * Return: 1 or 0
  */
 int is_digit(char *s)
 {
 	int i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
 		if (s[i] < '0' || s[i] > '9')
 			return (0);
@@ -52,8 +52,8 @@ int is_digit(char *s)
 }
 
 /**
- * print_number - prints the result
- * @res: result array
+ * print_number - prints number
+ * @res: result
  * @len: length
  */
 void print_number(int *res, int len)
@@ -80,9 +80,9 @@ void print_number(int *res, int len)
 }
 
 /**
- * main - multiplies two positive numbers
- * @argc: argument count
- * @argv: argument vector
+ * main - multiply
+ * @argc: count
+ * @argv: args
  *
  * Return: 0
  */
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
 	n1 = argv[1];
 	n2 = argv[2];
 
-	if (!is_digit(n1) || !is_digit(n2))
+	if (is_digit(n1) == 0 || is_digit(n2) == 0)
 		error_exit();
 
 	len1 = _strlen(n1);
@@ -116,20 +116,29 @@ int main(int argc, char *argv[])
 	if (res == NULL)
 		error_exit();
 
-	for (i = 0; i < len; i++)
+	i = 0;
+	while (i < len)
+	{
 		res[i] = 0;
+		i++;
+	}
 
-	for (i = len1 - 1; i >= 0; i--)
+	i = len1 - 1;
+	while (i >= 0)
 	{
 		carry = 0;
-		for (j = len2 - 1; j >= 0; j--)
+		j = len2 - 1;
+
+		while (j >= 0)
 		{
 			mul = (n1[i] - '0') * (n2[j] - '0');
 			mul = mul + res[i + j + 1] + carry;
 			res[i + j + 1] = mul % 10;
 			carry = mul / 10;
+			j--;
 		}
 		res[i] = res[i] + carry;
+		i--;
 	}
 
 	print_number(res, len);
