@@ -16,30 +16,32 @@ void error_exit(void)
 }
 
 /**
- * _strlen - returns the length of a string
+ * _strlen - returns length of string
  * @s: string
  *
- * Return: length of string
+ * Return: length
  */
 int _strlen(char *s)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (s[i])
 		i++;
 	return (i);
 }
 
 /**
- * is_digit - checks if a string contains only digits
+ * is_digit - checks if string contains only digits
  * @s: string
  *
- * Return: 1 if only digits, 0 otherwise
+ * Return: 1 if digits, 0 otherwise
  */
 int is_digit(char *s)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (s[i])
 	{
 		if (s[i] < '0' || s[i] > '9')
@@ -56,8 +58,9 @@ int is_digit(char *s)
  */
 void print_number(int *res, int len)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (i < len && res[i] == 0)
 		i++;
 
@@ -78,15 +81,22 @@ void print_number(int *res, int len)
 
 /**
  * main - multiplies two positive numbers
- * @argc: number of arguments
- * @argv: array of arguments
+ * @argc: argument count
+ * @argv: argument vector
  *
- * Return: Always 0
+ * Return: 0 on success
  */
 int main(int argc, char *argv[])
 {
-	char *n1, *n2;
-	int len1, len2, len, i, j, carry, mul;
+	char *n1;
+	char *n2;
+	int len1;
+	int len2;
+	int len;
+	int i;
+	int j;
+	int carry;
+	int mul;
 	int *res;
 
 	if (argc != 3)
@@ -115,11 +125,11 @@ int main(int argc, char *argv[])
 		for (j = len2 - 1; j >= 0; j--)
 		{
 			mul = (n1[i] - '0') * (n2[j] - '0');
-			mul += res[i + j + 1] + carry;
+			mul = mul + res[i + j + 1] + carry;
 			res[i + j + 1] = mul % 10;
 			carry = mul / 10;
 		}
-		res[i] += carry;
+		res[i] = res[i] + carry;
 	}
 
 	print_number(res, len);
