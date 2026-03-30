@@ -7,8 +7,9 @@
  */
 void error_exit(int *result)
 {
-	if (result != NULL)
+	if (result)
 		free(result);
+
 	_putchar('E');
 	_putchar('r');
 	_putchar('r');
@@ -26,9 +27,8 @@ void error_exit(int *result)
  */
 int _strlen(char *s)
 {
-	int i;
+	int i = 0;
 
-	i = 0;
 	while (s[i])
 		i++;
 	return (i);
@@ -42,9 +42,8 @@ int _strlen(char *s)
  */
 int is_digit(char *s)
 {
-	int i;
+	int i = 0;
 
-	i = 0;
 	while (s[i])
 	{
 		if (s[i] < '0' || s[i] > '9')
@@ -61,9 +60,8 @@ int is_digit(char *s)
  */
 void print_result(int *result, int size)
 {
-	int i;
+	int i = 0;
 
-	i = 0;
 	while (i < size && result[i] == 0)
 		i++;
 
@@ -119,20 +117,29 @@ int main(int argc, char *argv[])
 	if (result == NULL)
 		error_exit(NULL);
 
-	for (i = 0; i < len; i++)
+	i = 0;
+	while (i < len)
+	{
 		result[i] = 0;
+		i++;
+	}
 
-	for (i = len1 - 1; i >= 0; i--)
+	i = len1 - 1;
+	while (i >= 0)
 	{
 		carry = 0;
-		for (j = len2 - 1; j >= 0; j--)
+		j = len2 - 1;
+
+		while (j >= 0)
 		{
 			mul = (num1[i] - '0') * (num2[j] - '0');
 			mul += result[i + j + 1] + carry;
 			result[i + j + 1] = mul % 10;
 			carry = mul / 10;
+			j--;
 		}
 		result[i] += carry;
+		i--;
 	}
 
 	print_result(result, len);
