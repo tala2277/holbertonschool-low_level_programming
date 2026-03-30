@@ -54,7 +54,7 @@ int is_digit(char *s)
 /**
  * print_number - prints the result
  * @res: result array
- * @len: length of array
+ * @len: length
  */
 void print_number(int *res, int len)
 {
@@ -84,7 +84,7 @@ void print_number(int *res, int len)
  * @argc: argument count
  * @argv: argument vector
  *
- * Return: 0 on success
+ * Return: 0
  */
 int main(int argc, char *argv[])
 {
