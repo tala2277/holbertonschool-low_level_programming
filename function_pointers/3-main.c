@@ -3,9 +3,9 @@
 #include "3-calc.h"
 
 /**
- * main - calculator
+ * main - entry point
  * @argc: argument count
- * @argv: arguments
+ * @argv: argument vector
  * Return: 0
  */
 int main(int argc, char *argv[])
