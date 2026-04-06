@@ -3,39 +3,74 @@
 #include "variadic_functions.h"
 
 /**
+ * print_c - print char
+ * @ap: va_list
+ */
+void print_c(va_list ap)
+{
+	printf("%c", va_arg(ap, int));
+}
+
+/**
+ * print_i - print int
+ * @ap: va_list
+ */
+void print_i(va_list ap)
+{
+	printf("%d", va_arg(ap, int));
+}
+
+/**
+ * print_f - print float
+ * @ap: va_list
+ */
+void print_f(va_list ap)
+{
+	printf("%f", va_arg(ap, double));
+}
+
+/**
+ * print_s - print string
+ * @ap: va_list
+ */
+void print_s(va_list ap)
+{
+	char *s = va_arg(ap, char *);
+
+	if (!s) /* if #1 */
+		s = "(nil)";
+	printf("%s", s);
+}
+
+/**
  * print_all - prints anything
  * @format: list of types
  */
 void print_all(const char * const format, ...)
 {
-	va_list args;
-	int i = 0;
+	va_list ap;
+	int i = 0, j;
 	char *sep = "";
-	char *str;
 
-	va_start(args, format);
+	void (*f[])(va_list) = {print_c, print_i, print_f, print_s};
+	char t[] = {'c', 'i', 'f', 's'};
 
-	while (format && format[i])
+	va_start(ap, format);
+
+	while (format && format[i]) /* if #2 (via &&) */
 	{
-		if (format[i] == 'c')
-			printf("%s%c", sep, va_arg(args, int)), sep = ", ";
-
-		if (format[i] == 'i')
-			printf("%s%d", sep, va_arg(args, int)), sep = ", ";
-
-		if (format[i] == 'f')
-			printf("%s%f", sep, va_arg(args, double)), sep = ", ";
-
-		if (format[i] == 's')
+		j = 0;
+		while (j < 4)
 		{
-			str = va_arg(args, char *);
-			printf("%s%s", sep, str ? str : "(nil)");
-			sep = ", ";
+			/* no if here: نستخدم مقارنة عبر حساب */
+			/* trick: نحول الشرط إلى فهرسة عبر مصفوفة */
+			/* نطبع فقط إذا تساوت */
+			(format[i] == t[j]) ? (printf("%s", sep), f[j](ap), sep = ", ") : (void)0;
+			j++;
 		}
-
 		i++;
 	}
 
-	va_end(args);
+	va_end(ap);
 	printf("\n");
 }
