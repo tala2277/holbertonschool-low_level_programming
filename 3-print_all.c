@@ -3,74 +3,46 @@
 #include "variadic_functions.h"
 
 /**
- * print_c - print char
- * @ap: va_list
- */
-void print_c(va_list ap)
-{
-	printf("%c", va_arg(ap, int));
-}
-
-/**
- * print_i - print int
- * @ap: va_list
- */
-void print_i(va_list ap)
-{
-	printf("%d", va_arg(ap, int));
-}
-
-/**
- * print_f - print float
- * @ap: va_list
- */
-void print_f(va_list ap)
-{
-	printf("%f", va_arg(ap, double));
-}
-
-/**
- * print_s - print string
- * @ap: va_list
- */
-void print_s(va_list ap)
-{
-	char *s = va_arg(ap, char *);
-
-	if (!s) /* if #1 */
-		s = "(nil)";
-	printf("%s", s);
-}
-
-/**
  * print_all - prints anything
  * @format: list of types
  */
 void print_all(const char * const format, ...)
 {
-	va_list ap;
-	int i = 0, j;
+	va_list args;
+	int i = 0;
 	char *sep = "";
 
-	void (*f[])(va_list) = {print_c, print_i, print_f, print_s};
-	char t[] = {'c', 'i', 'f', 's'};
+	va_start(args, format);
 
-	va_start(ap, format);
-
-	while (format && format[i]) /* if #2 (via &&) */
+	while (format && format[i])
 	{
-		j = 0;
-		while (j < 4)
+		switch (format[i])
 		{
-			/* no if here: نستخدم مقارنة عبر حساب */
-			/* trick: نحول الشرط إلى فهرسة عبر مصفوفة */
-			/* نطبع فقط إذا تساوت */
-			(format[i] == t[j]) ? (printf("%s", sep), f[j](ap), sep = ", ") : (void)0;
-			j++;
+			case 'c':
+				printf("%s%c", sep, va_arg(args, int));
+				sep = ", ";
+				break;
+			case 'i':
+				printf("%s%d", sep, va_arg(args, int));
+				sep = ", ";
+				break;
+			case 'f':
+				printf("%s%f", sep, va_arg(args, double));
+				sep = ", ";
+				break;
+			case 's':
+			{
+				char *str = va_arg(args, char *);
+				if (str == NULL)
+					str = "(nil)";
+				printf("%s%s", sep, str);
+				sep = ", ";
+				break;
+			}
 		}
 		i++;
 	}
 
-	va_end(ap);
+	va_end(args);
 	printf("\n");
 }
