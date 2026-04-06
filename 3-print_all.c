@@ -3,42 +3,67 @@
 #include "variadic_functions.h"
 
 /**
+ * print_c - print char
+ */
+void print_c(va_list args, char *sep)
+{
+	printf("%s%c", sep, va_arg(args, int));
+}
+
+/**
+ * print_i - print int
+ */
+void print_i(va_list args, char *sep)
+{
+	printf("%s%d", sep, va_arg(args, int));
+}
+
+/**
+ * print_f - print float
+ */
+void print_f(va_list args, char *sep)
+{
+	printf("%s%f", sep, va_arg(args, double));
+}
+
+/**
+ * print_s - print string
+ */
+void print_s(va_list args, char *sep)
+{
+	char *str = va_arg(args, char *);
+	printf("%s%s", sep, str ? str : "(nil)");
+}
+
+/**
  * print_all - prints anything
  * @format: list of types
  */
 void print_all(const char * const format, ...)
 {
 	va_list args;
-	int i = 0;
+	int i = 0, j;
 	char *sep = "";
+
+	void (*funcs[])(va_list, char *) = {
+		print_c, print_i, print_f, print_s
+	};
+
+	char types[] = {'c', 'i', 'f', 's'};
 
 	va_start(args, format);
 
 	while (format && format[i])
 	{
-		switch (format[i])
+		j = 0;
+		while (j < 4)
 		{
-			case 'c':
-				printf("%s%c", sep, va_arg(args, int));
-				sep = ", ";
-				break;
-			case 'i':
-				printf("%s%d", sep, va_arg(args, int));
-				sep = ", ";
-				break;
-			case 'f':
-				printf("%s%f", sep, va_arg(args, double));
-				sep = ", ";
-				break;
-			case 's':
+			if (format[i] == types[j])
 			{
-				char *str = va_arg(args, char *);
-				if (str == NULL)
-					str = "(nil)";
-				printf("%s%s", sep, str);
+				funcs[j](args, sep);
 				sep = ", ";
-				break;
 			}
+			j++;
 		}
 		i++;
 	}
