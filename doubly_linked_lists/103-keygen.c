@@ -3,53 +3,53 @@
 #include <time.h>
 
 /**
- * main - Generates a key for crackme5.
- * @argc: The number of arguments.
- * @argv: The arguments vector.
+ * main - Generates a key for crackme5 based on a username.
+ * @argc: Number of arguments.
+ * @argv: Arguments vector.
  *
  * Return: 0 on success, 1 on error.
  */
 int main(int argc, char *argv[])
 {
-	char *u;
-	char k[7];
-	int l, i, s = 0, p = 1, m, sq = 0, r;
-	char *lookup = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789./";
+ char key[7];
+ char *lookup;
+ char *username;
+ int len;
+ int i;
+ int sum = 0;
+ int prod = 1;
+ int max;
+ int sum_sq = 0;
+ int rand_val;
 
-	if (argc != 2)
-		return (1);
+ if (argc != 2)
+  return (1);
 
-	u = argv[1];
-	for (l = 0; u[l]; l++)
-		;
+ lookup = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789./";
+ username = argv[1];
+ for (len = 0; username[len]; len++)
+  ;
 
-	/* Key[0] */
-	k[0] = lookup[(l ^ 59) & 63];
-	/* Key[1] */
-	for (i = 0; i < l; i++)
-		s += u[i];
-	k[1] = lookup[(s ^ 79) & 63];
-	/* Key[2] */
-	for (i = 0; i < l; i++)
-		p *= u[i];
-	k[2] = lookup[(p ^ 85) & 63];
-	/* Key[3] */
-	m = u[0];
-	for (i = 0; i < l; i++)
-		if (u[i] > m)
-			m = u[i];
-	srand(m ^ 14);
-	k[3] = lookup[rand() & 63];
-	/* Key[4] */
-	for (i = 0; i < l; i++)
-		sq += u[i] * u[i];
-	k[4] = lookup[(sq ^ 239) & 63];
-	/* Key[5] */
-	for (i = 0, r = 0; i < u[0]; i++)
-		r = rand();
-	k[5] = lookup[(r ^ 229) & 63];
-
-	k[6] = '\0';
-	printf("%s", k);
-	return (0);
+ key[0] = lookup[(len ^ 59) & 63];
+ for (i = 0; i < len; i++)
+  sum += username[i];
+ key[1] = lookup[(sum ^ 79) & 63];
+ for (i = 0; i < len; i++)
+  prod *= username[i];
+ key[2] = lookup[(prod ^ 85) & 63];
+ max = username[0];
+ for (i = 0; i < len; i++)
+  if (username[i] > max)
+   max = username[i];
+ srand(max ^ 14);
+ key[3] = lookup[rand() & 63];
+ for (i = 0; i < len; i++)
+  sum_sq += username[i] * username[i];
+ key[4] = lookup[(sum_sq ^ 239) & 63];
+ for (i = 0, rand_val = 0; i < username[0]; i++)
+  rand_val = rand();
+ key[5] = lookup[(rand_val ^ 229) & 63];
+ key[6] = '\0';
+ printf("%s", key);
+ return (0);
 }
