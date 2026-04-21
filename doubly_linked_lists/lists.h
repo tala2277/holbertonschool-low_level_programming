@@ -52,4 +52,12 @@ dlistint_t *add_dnodeint(dlistint_t **head, const int n);
  */
 dlistint_t *add_dnodeint_end(dlistint_t **head, const int n);
 
+/**
+ * free_dlistint - frees a dlistint_t list
+ * @head: pointer to the head of the list
+ *
+ * Return: nothing
+ */
+void free_dlistint(dlistint_t *head);
+
 #endif
