@@ -34,4 +34,13 @@ size_t print_list(const list_t *h);
  */
 size_t list_len(const list_t *h);
 
+/**
+ * add_node - adds a new node at the beginning
+ * @head: pointer to pointer of head
+ * @str: string to duplicate
+ *
+ * Return: new node
+ */
+list_t *add_node(list_t **head, const char *str);
+
 #endif
