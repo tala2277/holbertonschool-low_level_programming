@@ -69,4 +69,12 @@ void free_dlistint(dlistint_t *head);
  */
 dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index);
 
+/**
+ * sum_dlistint - returns the sum of all the data of a dlistint_t list
+ * @head: pointer to the head of the list
+ *
+ * Return: sum of all the data, or 0 if the list is empty
+ */
+int sum_dlistint(dlistint_t *head);
+
 #endif
