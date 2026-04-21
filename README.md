@@ -7,4 +7,4 @@ This project is about understanding and implementing singly linked lists in C.
 - More tasks coming...
 
 ## Author
-tala2277
+Tala Alhudhaibi 
