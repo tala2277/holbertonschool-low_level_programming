@@ -1,0 +1,33 @@
+crackme5 analysis notes
+
+1) Inspect file type
+file crackme5
+
+2) Extract printable strings
+strings crackme5
+
+3) Trace library calls
+ltrace ./crackme5 test test
+
+4) Disassemble binary
+objdump -d crackme5 > crackme5.asm
+
+5) Debug with gdb
+gdb ./crackme5
+
+Useful gdb commands:
+break main
+run test test
+disassemble main
+info functions
+x/s <address>
+x/i <address>
+ni
+si
+info registers
+quit
+
+Goal of analysis:
+- Identify how username is processed
+- Identify validation path for the second argument
+- Understand where success and failure branches happen
