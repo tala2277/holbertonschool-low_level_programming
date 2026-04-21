@@ -1,10 +1,6 @@
-# Singly Linked Lists
+# holbertonschool-low_level_programming
 
-This project is about understanding and implementing singly linked lists in C.
-
-## Tasks
-- Print a list
-- More tasks coming...
+This repository contains C programming projects, including singly linked lists.
 
 ## Author
-Tala Alhudhaibi 
+Tala Alhudhaibi
