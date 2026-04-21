@@ -185,6 +185,81 @@ void print_entry(unsigned long int e_entry, unsigned char *e_ident)
 }
 
 /**
+ * check_elf - checks if file is ELF
+ * @e_ident: ELF identification
+ */
+void check_elf(unsigned char *e_ident)
+{
+	if (e_ident[EI_MAG0] != ELFMAG0 ||
+	    e_ident[EI_MAG1] != ELFMAG1 ||
+	    e_ident[EI_MAG2] != ELFMAG2 ||
+	    e_ident[EI_MAG3] != ELFMAG3)
+	{
+		dprintf(STDERR_FILENO, "Error: Not an ELF file\n");
+		exit(98);
+	}
+}
+
+/**
+ * close_elf - closes ELF file
+ * @fd: file descriptor
+ */
+void close_elf(int fd)
+{
+	if (close(fd) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
+		exit(98);
+	}
+}
+
+/**
+ * read_elf_header - opens and reads ELF header
+ * @filename: file name
+ * @header: header buffer
+ *
+ * Return: file descriptor
+ */
+int read_elf_header(char *filename, Elf64_Ehdr *header)
+{
+	int fd;
+	ssize_t r;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", filename);
+		exit(98);
+	}
+
+	r = read(fd, header, sizeof(Elf64_Ehdr));
+	if (r == -1 || r != sizeof(Elf64_Ehdr))
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read file %s\n", filename);
+		close_elf(fd);
+		exit(98);
+	}
+
+	return (fd);
+}
+
+/**
+ * print_elf_header - prints selected ELF header info
+ * @header: ELF header
+ */
+void print_elf_header(Elf64_Ehdr *header)
+{
+	print_magic(header->e_ident);
+	print_class(header->e_ident);
+	print_data(header->e_ident);
+	print_version(header->e_ident);
+	print_osabi(header->e_ident);
+	print_abi_version(header->e_ident);
+	print_type(header->e_type, header->e_ident);
+	print_entry(header->e_entry, header->e_ident);
+}
+
+/**
  * main - displays information from the ELF header
  * @argc: argument count
  * @argv: argument vector
@@ -202,39 +277,10 @@ int main(int argc, char *argv[])
 		exit(98);
 	}
 
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't open file %s\n", argv[1]);
-		exit(98);
-	}
+	fd = read_elf_header(argv[1], &header);
+	check_elf(header.e_ident);
+	print_elf_header(&header);
+	close_elf(fd);
 
-	if (read(fd, &header, sizeof(header)) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read file %s\n", argv[1]);
-		close(fd);
-		exit(98);
-	}
-
-	if (header.e_ident[EI_MAG0] != ELFMAG0 ||
-	    header.e_ident[EI_MAG1] != ELFMAG1 ||
-	    header.e_ident[EI_MAG2] != ELFMAG2 ||
-	    header.e_ident[EI_MAG3] != ELFMAG3)
-	{
-		dprintf(STDERR_FILENO, "Error: Not an ELF file\n");
-		close(fd);
-		exit(98);
-	}
-
-	print_magic(header.e_ident);
-	print_class(header.e_ident);
-	print_data(header.e_ident);
-	print_version(header.e_ident);
-	print_osabi(header.e_ident);
-	print_abi_version(header.e_ident);
-	print_type(header.e_type, header.e_ident);
-	print_entry(header.e_entry, header.e_ident);
-
-	close(fd);
 	return (0);
 }
