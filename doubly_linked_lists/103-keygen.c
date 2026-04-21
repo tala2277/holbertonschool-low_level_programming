@@ -23,7 +23,9 @@ int main(int argc, char *argv[])
  int res;
 
  if (argc != 2)
+ {
   return (1);
+ }
 
  lookup = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789./";
  name = argv[1];
@@ -51,6 +53,7 @@ int main(int argc, char *argv[])
  for (i = 0; i < len; i++)
   sum_sq += (name[i] * name[i]);
  key[4] = lookup[(sum_sq ^ 239) & 63];
+ res = 0;
  for (i = 0; i < name[0]; i++)
   res = rand();
  key[5] = lookup[(res ^ 229) & 63];
