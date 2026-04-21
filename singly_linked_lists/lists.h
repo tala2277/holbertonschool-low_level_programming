@@ -20,10 +20,18 @@ typedef struct list_s
 
 /**
  * print_list - prints all elements of a list_t list
- * @h: pointer to the head of the list
+ * @h: pointer to the head
  *
  * Return: number of nodes
  */
 size_t print_list(const list_t *h);
+
+/**
+ * list_len - returns the number of elements in a linked list
+ * @h: pointer to the head
+ *
+ * Return: number of nodes
+ */
+size_t list_len(const list_t *h);
 
 #endif
