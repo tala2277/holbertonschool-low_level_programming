@@ -3,59 +3,60 @@
 #include <string.h>
 
 /**
- * main - Generates a valid key for crackme5 based on a username.
- * @argc: The number of arguments.
- * @argv: The arguments vector.
+ * main - Generates a valid key for crackme5.
+ * @argc: Number of arguments.
+ * @argv: Arguments vector.
  *
  * Return: 0 on success, 1 on error.
  */
 int main(int argc, char *argv[])
 {
- char *username;
+ unsigned int i, res;
+ size_t len;
+ char *user;
  char key[7];
- int len, i, res;
  char *lookup = "A-CHRDw87lNS0E9B2TibgpnMVys5XzvtOGJcYLU641omwEhe7preirSTZ";
 
  if (argc != 2)
   return (1);
 
- username = argv[1];
- len = strlen(username);
+ user = argv[1];
+ len = strlen(user);
 
- /* Part 1 */
+ /* 1. Based on length */
  key[0] = lookup[(len ^ 59) & 63];
 
- /* Part 2 */
+ /* 2. Based on sum of chars */
  for (i = 0, res = 0; i < len; i++)
-  res += username[i];
+  res += user[i];
  key[1] = lookup[(res ^ 79) & 63];
 
- /* Part 3 */
+ /* 3. Based on product of chars */
  for (i = 0, res = 1; i < len; i++)
-  res *= username[i];
+  res *= user[i];
  key[2] = lookup[(res ^ 85) & 63];
 
- /* Part 4 */
- for (res = 0, i = 0; i < len; i++)
- {
-  if (username[i] > res)
-   res = username[i];
- }
+ /* 4. Based on max char and randomness */
+ res = 0;
+ for (i = 0; i < len; i++)
+  if ((unsigned int)user[i] > res)
+   res = (unsigned int)user[i];
  srand(res ^ 14);
  key[3] = lookup[rand() & 63];
 
- /* Part 5 */
- for (res = 0, i = 0; i < len; i++)
-  res += (username[i] * username[i]);
+ /* 5. Based on sum of squares */
+ res = 0;
+ for (i = 0; i < len; i++)
+  res += (user[i] * user[i]);
  key[4] = lookup[(res ^ 239) & 63];
 
- /* Part 6 */
- for (res = 0, i = 0; i < username[0]; i++)
+ /* 6. Based on first char and loop randomness */
+ res = 0;
+ for (i = 0; i < (unsigned int)user[0]; i++)
   res = rand();
  key[5] = lookup[(res ^ 229) & 63];
 
  key[6] = '\0';
  printf("%s", key);
-
  return (0);
 }
