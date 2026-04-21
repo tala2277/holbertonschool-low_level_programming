@@ -18,73 +18,23 @@ typedef struct dlistint_s
 	struct dlistint_s *next;
 } dlistint_t;
 
-/**
- * print_dlistint - prints all elements of a dlistint_t list
- * @h: pointer to the head of the list
- *
- * Return: number of nodes
- */
+/* prototypes */
 size_t print_dlistint(const dlistint_t *h);
-
-/**
- * dlistint_len - returns the number of elements in a linked list
- * @h: pointer to the head of the list
- *
- * Return: number of elements
- */
 size_t dlistint_len(const dlistint_t *h);
-
-/**
- * add_dnodeint - adds a new node at the beginning
- * @head: pointer to pointer of the head
- * @n: integer value
- *
- * Return: new node
- */
 dlistint_t *add_dnodeint(dlistint_t **head, const int n);
-
-/**
- * add_dnodeint_end - adds a new node at the end of a dlistint_t list
- * @head: pointer to pointer of the head of the list
- * @n: integer to store in the new node
- *
- * Return: address of the new element, or NULL if it failed
- */
 dlistint_t *add_dnodeint_end(dlistint_t **head, const int n);
-
-/**
- * free_dlistint - frees a dlistint_t list
- * @head: pointer to the head of the list
- *
- * Return: nothing
- */
 void free_dlistint(dlistint_t *head);
-
-/**
- * get_dnodeint_at_index - returns the nth node of a dlistint_t linked list
- * @head: pointer to the head of the list
- * @index: index of the node, starting from 0
- *
- * Return: nth node, or NULL if node does not exist
- */
 dlistint_t *get_dnodeint_at_index(dlistint_t *head, unsigned int index);
-
-/**
- * sum_dlistint - returns the sum of all the data of a dlistint_t list
- * @head: pointer to the head of the list
- *
- * Return: sum of all the data, or 0 if the list is empty
- */
 int sum_dlistint(dlistint_t *head);
+dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n);
 
 /**
- * insert_dnodeint_at_index - inserts a new node at a given position
- * @h: pointer to pointer of the head of the list
- * @idx: index where the new node should be added
- * @n: integer to store in the new node
+ * delete_dnodeint_at_index - deletes node at index
+ * @head: pointer to pointer of head
+ * @index: index of node
  *
- * Return: address of the new node, or NULL if it failed
+ * Return: 1 or -1
  */
-dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n);
+int delete_dnodeint_at_index(dlistint_t **head, unsigned int index);
 
 #endif
