@@ -3,6 +3,9 @@
 #include <string.h>
 #include <stdio.h>
 
+int add_new_node(shash_table_t *ht, const char *key,
+	const char *value, unsigned long int index);
+
 /**
  * shash_table_create - creates sorted hash table
  * @size: size
@@ -84,7 +87,7 @@ void insert_sorted(shash_table_t *ht, shash_node_t *node)
 int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 {
 	unsigned long int index;
-	shash_node_t *node, *new;
+	shash_node_t *node;
 	char *v;
 
 	if (!ht || !key || *key == '\0' || !value)
