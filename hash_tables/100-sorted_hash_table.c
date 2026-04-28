@@ -108,6 +108,23 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 		node = node->next;
 	}
 
+	return (add_new_node(ht, key, value, index));
+}
+
+
+/**
+ * add_new_node - adds a new sorted hash node
+ * @ht: table
+ * @key: key
+ * @value: value
+ * @index: array index
+ * Return: 1 or 0
+ */
+int add_new_node(shash_table_t *ht, const char *key,
+	const char *value, unsigned long int index)
+{
+	shash_node_t *new;
+
 	new = malloc(sizeof(shash_node_t));
 	if (!new)
 		return (0);
@@ -126,7 +143,6 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 	new->sprev = NULL;
 	new->snext = NULL;
 	ht->array[index] = new;
-
 	insert_sorted(ht, new);
 
 	return (1);
